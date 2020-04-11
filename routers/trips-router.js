@@ -1,6 +1,7 @@
 const db = require('../data/helpers/users-helpers')
 const tripDb = require('../data/helpers/trips-helpers')
 const photosDb = require('../data/helpers/photos-helpers')
+const commentsDb = require('../data/helpers/comments-helper');
 const router = require('express').Router()
 const authenticate = require('../authentication/authenticate-middleware')
 const validateTrip = require('../authentication/validate-trip');
@@ -21,6 +22,8 @@ router.get('/:id', async (req, res) => {
     const {id} = req.params;
     let trip = await tripDb.findTripById(id)
     trip.photos = await photosDb.findPhotosByTripId(id)
+    trip.comments = await commentsDb.findByTrip(id)
+
      if (trip === -1) res.status(404).json({ error: "That trip doesn't exist!"})
     else if (trip) res.status(200).json(trip)
     else res.status(500).json({ error: 'Could not get trip' })
@@ -64,7 +67,7 @@ router.post('/', authenticate, authenticatePost, validateTrip, async (req, res) 
     }
 })
 
-router.put('/:id', authenticate, authenticatePost, async(req, res) => {
+router.put('/:id', async(req, res) => {
     const {id} = req.params
     const changes = req.body; 
 

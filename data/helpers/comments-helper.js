@@ -19,7 +19,7 @@ async function findById(id) {
 }
 
 async function findByTrip(trip_id) {
-    return await db('comments').where('trip_id', trip_id).first()
+    return await db('comments').where('trip_id', trip_id)
 }
 
 async function findByCommenter(commenter_name) {
