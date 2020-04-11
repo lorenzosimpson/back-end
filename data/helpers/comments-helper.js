@@ -2,6 +2,7 @@ const db = require('../db-config');
 
 module.exports = {
     find,
+    findById,
     findByTrip,
     findByCommenter,
     updateComment,
@@ -11,6 +12,10 @@ module.exports = {
 
 async function find (){
     return await db('comments')
+}
+
+async function findById(id) {
+    return await db('comments').where({id}).first()
 }
 
 async function findByTrip(trip_id) {
