@@ -2,6 +2,7 @@ const router = require('express').Router()
 const usersRouter = require('./users-router')
 const tripsRouter = require('./trips-router')
 const photosRouter = require('./photos-router')
+const commentsRouter = require('./comments-router')
 const express = require('express')
 
 const authenticate = require('../authentication/authenticate-middleware')
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
 router.use('/users', usersRouter)
 router.use('/trips', tripsRouter)
 router.use('/photos', authenticate, photosRouter)
+router.use('/comments', commentsRouter)
 
 
 module.exports = router;
